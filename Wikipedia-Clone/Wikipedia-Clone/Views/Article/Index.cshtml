@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Articles</h2>
+
+@foreach (Wikipedia_Clone.Models.Article article in ViewBag.Articles)
+{
+    @Html.Partial("ArticleInfo", article)
+}
+
+<a href="/Article/New">Add article</a>
+

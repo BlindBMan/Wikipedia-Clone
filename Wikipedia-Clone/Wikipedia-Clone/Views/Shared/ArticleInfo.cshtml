@@ -1,0 +1,20 @@
+﻿@model Wikipedia_Clone.Models.Article
+
+<div>
+    <h1>
+        @Model.Title
+    </h1>
+
+    <p>
+        @Model.Content
+    </p>
+
+    <small>
+        @Model.Date.ToString()
+    </small>
+
+    <a href="/Article/Show/@Model.Id">View article</a>
+    <a href="/Article/Edit/@Model.Id">Edit article</a>
+</div>
+
+
