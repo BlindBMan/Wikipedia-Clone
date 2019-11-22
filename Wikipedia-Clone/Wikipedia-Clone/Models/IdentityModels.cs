@@ -26,7 +26,7 @@ namespace Wikipedia_Clone.Models
         }
 
         public DbSet<Article> Articles { get; set; }
-
+        public DbSet<Category> Categories { get; set; }
 
         public static ApplicationDbContext Create()
         {

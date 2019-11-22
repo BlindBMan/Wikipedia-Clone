@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Wikipedia_Clone.Models.Category
+
+<h1>
+    New Category
+</h1>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Category"))
+{
+    @Html.HiddenFor(m => m.CategoryId)
+
+    @Html.Label("CategoryTitle", "Title")
+    <br />
+    
+    @Html.TextBox("CategoryTitle", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.CategoryTitle, null, new { @class = "text-danger" })
+    <br />
+
+    <button type="submit">
+        Add category
+    </button>
+
+}
+

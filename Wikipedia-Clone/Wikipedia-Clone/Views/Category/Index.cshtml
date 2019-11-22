@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Wikipedia_Clone.Models.Category
+
+<h1>
+    Categories
+</h1>
+
+@foreach (Wikipedia_Clone.Models.Category category in ViewBag.Categories)
+{
+    <h3>
+        @category.CategoryTitle
+    </h3>
+    @Html.ActionLink("Edit category", "Edit", "Category", null, null)
+    @Html.ActionLink("View category", "Show", "Category", new { Model.CategoryId }, null)
+    <br />
+
+}
+
+@Html.ActionLink("Add new category", "New", "Category", null, null)
+<br />
+
+
+

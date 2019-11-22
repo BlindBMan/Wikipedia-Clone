@@ -12,10 +12,10 @@ namespace Wikipedia_Clone.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Title is mandatory")]
+        [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Content is mandatory")]
+        [Required(ErrorMessage = "Content is required")]
         public string Content { get; set; }
 
         public DateTime Date { get; set; }
