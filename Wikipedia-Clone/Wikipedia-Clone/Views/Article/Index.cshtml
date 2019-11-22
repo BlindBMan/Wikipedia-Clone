@@ -9,5 +9,4 @@
     @Html.Partial("ArticleInfo", article)
 }
 
-<a href="/Article/New">Add article</a>
-
+@Html.ActionLink("Add article", "New", "Article", null, null)
