@@ -12,8 +12,9 @@
     <h3>
         @category.CategoryTitle
     </h3>
-    @Html.ActionLink("Edit category", "Edit", "Category", null, null)
-    @Html.ActionLink("View category", "Show", "Category", new { Model.CategoryId }, null)
+
+    @Html.ActionLink("Edit category ", "Edit", "Category", routeValues: new { id = category.CategoryId }, htmlAttributes: null)
+    @Html.ActionLink("View category ", "Show", "Category", new { id = category.CategoryId }, null)
     <br />
 
 }

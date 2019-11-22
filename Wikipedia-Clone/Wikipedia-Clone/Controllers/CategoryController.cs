@@ -48,6 +48,53 @@ namespace Wikipedia_Clone.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult Show(int id)
+        {
+            Category category = db.Categories.Find(id);
+            return View(category);
+        }
 
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            Category category = db.Categories.Find(id);
+            return View(category);
+        }
+
+        [HttpPut]
+        public ActionResult Edit(int id, Category reqCategory)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Category category = db.Categories.Find(id);
+                    if (TryUpdateModel(category))
+                    {
+                        category.CategoryTitle = reqCategory.CategoryTitle;
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(reqCategory);
+                }
+            }
+            catch (Exception e)
+            {
+                return View(reqCategory);
+            }
+        }
+
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            Category category = db.Categories.Find(id);
+            db.Categories.Remove(category);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Wikipedia_Clone.Models.Category
+
+<h3>
+    @Model.CategoryTitle
+</h3>
+
+@Html.ActionLink("Edit category", "Edit", "Category", new { id = Model.CategoryId }, null)
+
+@using (Html.BeginForm(actionName: "Delete", controllerName: "Category"))
+{
+    @Html.HiddenFor(m => m.CategoryId)
+    @Html.HttpMethodOverride(HttpVerbs.Delete)
+
+    <button type="submit">
+        Delete category
+    </button>
+}
+
+<!-- Html.ActionLink("Back to categories", actionName: "Index", controllerName: "Category", null, null) -->
+
+
+

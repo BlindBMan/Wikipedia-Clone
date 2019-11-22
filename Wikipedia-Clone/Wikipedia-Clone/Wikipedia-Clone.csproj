@@ -246,6 +246,8 @@
     <Content Include="Views\Article\Show.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\New.cshtml" />
+    <Content Include="Views\Category\Show.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

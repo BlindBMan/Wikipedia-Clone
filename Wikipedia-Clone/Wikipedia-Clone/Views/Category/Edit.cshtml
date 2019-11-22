@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Wikipedia_Clone.Models.Category
+
+<h1>
+    Edit @Model.CategoryTitle
+</h1>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Category"))
+{
+    @Html.HiddenFor(m => m.CategoryId)
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.Label("CategoryTitle", "Category Title")
+    <br />
+
+    @Html.TextBox("CategoryTitle", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.CategoryTitle, null, new { @class = "text-danger" })
+    <br />
+
+    <button type="submit">
+        Save edit
+    </button>
+}
+
