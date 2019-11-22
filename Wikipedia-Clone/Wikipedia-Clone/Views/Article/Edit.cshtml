@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Wikipedia_Clone.Models.Article
+
+<h2>
+    Edit @Model.Title
+</h2>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Article"))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.Label("Title", "Article title")
+    <br />
+
+    @Html.TextBox("Title", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Content", "Content")
+    <br />
+
+    @Html.TextArea("Content", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })
+    <br />
+
+    @Html.Hidden("Date", DateTime.Now)
+
+    <button type="submit">
+        Save edit
+    </button>
+}
+

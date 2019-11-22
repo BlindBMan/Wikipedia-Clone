@@ -1,0 +1,34 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Wikipedia_Clone.Models.Article
+
+<h2>Add article</h2>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Article"))
+{
+    @Html.HiddenFor(m => m.Id)
+
+    @Html.Label("Title", "Article title")
+    <br />
+
+    @Html.TextBox("Title", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Content", "Content")
+    <br />
+
+    @Html.TextArea("Content", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })
+    <br />
+
+    @Html.Hidden("Date", DateTime.Now)
+
+    <button type="submit">
+        Add article
+    </button>
+
+
+}
+
