@@ -9,9 +9,8 @@
 
 @Html.ActionLink("Edit category", "Edit", "Category", new { id = Model.CategoryId }, null)
 
-@using (Html.BeginForm(actionName: "Delete", controllerName: "Category"))
+@using (Html.BeginForm(actionName: "Delete", controllerName: "Category", routeValues: new { id = Model.CategoryId }))
 {
-    @Html.HiddenFor(m => m.CategoryId)
     @Html.HttpMethodOverride(HttpVerbs.Delete)
 
     <button type="submit">
