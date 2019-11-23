@@ -24,6 +24,14 @@
     <br />
 
     @Html.Hidden("Date", DateTime.Now)
+    <br />
+
+    <label>Select category</label>
+    @Html.DropDownListFor(m => m.CategoryId,
+                          new SelectList(Model.Categories, "Value", "Text"),
+                          "Select category",
+                          new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
 
     <button type="submit">
         Add article

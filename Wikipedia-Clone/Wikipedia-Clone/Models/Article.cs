@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Wikipedia_Clone.Models
 {
@@ -20,8 +21,12 @@ namespace Wikipedia_Clone.Models
 
         public DateTime Date { get; set; }
 
-        // [Required(ErrorMessage = "Category is mandatory")]
-        // public int CategoryId { get; set; }
+        [Required(ErrorMessage = "Category is required")]
+        public int CategoryId { get; set; }
+
+        public virtual Category Category { get; set; }
+
+        public IEnumerable<SelectListItem> Categories { get; set; }
 
 
     }

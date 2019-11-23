@@ -13,6 +13,10 @@
         @Model.Date.ToString()
     </small>
 
+    <p>
+        @Model.Category.CategoryTitle
+    </p>
+
     @Html.ActionLink("View article", "Show", "Article",  new { Model.Id }, null)
     @Html.ActionLink("Edit article", "Edit", "Article",  new { Model.Id }, null)
 </div>
