@@ -4,11 +4,14 @@
 
 @Html.Partial("ArticleInfo", Model)
 
-@Html.ActionLink("Back to all articles", "Index", "Article", null, null)
-
 @using (Html.BeginForm(actionName: "Delete", controllerName: "Article"))
 {
     @Html.HiddenFor(m => m.Id)
     @Html.HttpMethodOverride(HttpVerbs.Delete)
     <button type="submit">Delete article</button>
 }
+
+<br />
+
+@Html.ActionLink("Back to articles", "Index", "Article", null, null)
+

@@ -394,3 +394,5 @@ Wikipedia-Clone/Wikipedia-Clone/Web.Debug.config
 Wikipedia-Clone/Wikipedia-Clone/Web.Release.config
 Wikipedia-Clone/Wikipedia-Clone/Wikipedia-Clone.csproj
 Wikipedia-Clone/Wikipedia-Clone/Wikipedia-Clone.csproj.user
+Wikipedia-Clone/Wikipedia-Clone/App_Data/aspnet-Wikipedia-Clone-20191121125245.mdf
+Wikipedia-Clone/Wikipedia-Clone/App_Data/aspnet-Wikipedia-Clone-20191121125245_log.ldf

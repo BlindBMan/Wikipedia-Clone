@@ -13,8 +13,12 @@
         @Model.Date.ToString()
     </small>
 
-    <a href="/Article/Show/@Model.Id">View article</a>
-    <a href="/Article/Edit/@Model.Id">Edit article</a>
+    <p>
+        @Model.Category.CategoryTitle
+    </p>
+
+    @Html.ActionLink("View article", "Show", "Article",  new { Model.Id }, null)
+    @Html.ActionLink("Edit article", "Edit", "Article",  new { Model.Id }, null)
 </div>
 
 

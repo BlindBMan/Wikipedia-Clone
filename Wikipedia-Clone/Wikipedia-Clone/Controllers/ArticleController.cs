@@ -14,7 +14,7 @@ namespace Wikipedia_Clone.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var articles = db.Articles;
+            var articles = db.Articles.Include("Category");
             ViewBag.Articles = articles;
             return View();
         }
@@ -23,12 +23,15 @@ namespace Wikipedia_Clone.Controllers
         public ActionResult New()
         {
             Article article = new Article();
+            article.Categories = GetCategories();
             return View(article);
         }
 
         [HttpPost]
         public ActionResult New(Article article)
         {
+            article.Categories = GetCategories();
+
             try
             {
                 if (ModelState.IsValid)
@@ -59,12 +62,15 @@ namespace Wikipedia_Clone.Controllers
         public ActionResult Edit(int id)
         {
             Article article = db.Articles.Find(id);
+            article.Categories = GetCategories();
             return View(article);
         }
 
         [HttpPut]
         public ActionResult Edit(int id, Article reqArticle)
         {
+            reqArticle.Categories = GetCategories();
+
             try
             {
                 if (ModelState.IsValid)
@@ -98,6 +104,24 @@ namespace Wikipedia_Clone.Controllers
             db.Articles.Remove(article);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [NonAction]
+        public IEnumerable<SelectListItem> GetCategories()
+        {
+            var list = new List<SelectListItem>();
+            var categories = from cat in db.Categories select cat;
+
+            foreach (var cat in categories)
+            {
+                list.Add(new SelectListItem
+                {
+                    Value = cat.CategoryId.ToString(),
+                    Text = cat.CategoryTitle.ToString()
+                });
+            }
+
+            return list;
         }
     }
 }
