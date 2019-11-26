@@ -14,6 +14,6 @@ namespace Wikipedia_Clone.Models
         [Required(ErrorMessage = "Title required")]
         public string CategoryTitle { get; set; }
 
-        // TODO: ICollection to be added
+        public ICollection<Article> Articles { get; set; }
     }
 }
