@@ -12,7 +12,7 @@ namespace Wikipedia_Clone
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            // createRoles();
+            createRoles();
         }
 
         private void createRoles()

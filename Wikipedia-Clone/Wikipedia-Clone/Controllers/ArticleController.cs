@@ -98,6 +98,7 @@ namespace Wikipedia_Clone.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "God, Admin")]
         public ActionResult Delete(int id)
         {
             Article article = db.Articles.Find(id);

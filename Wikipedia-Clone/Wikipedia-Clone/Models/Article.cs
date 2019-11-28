@@ -28,6 +28,9 @@ namespace Wikipedia_Clone.Models
 
         public IEnumerable<SelectListItem> Categories { get; set; }
 
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
 
     }
 }

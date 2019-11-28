@@ -7,6 +7,7 @@ using Wikipedia_Clone.Models;
 
 namespace Wikipedia_Clone.Controllers
 {
+    [Authorize(Roles = "God, Admin")]
     public class CategoryController : Controller
     {
         private ApplicationDbContext db = ApplicationDbContext.Create();
