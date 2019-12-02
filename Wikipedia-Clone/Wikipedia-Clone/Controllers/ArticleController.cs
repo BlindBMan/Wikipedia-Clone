@@ -14,7 +14,7 @@ namespace Wikipedia_Clone.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var articles = db.Articles.Include("Category");
+            var articles = db.Articles.Include("Category").Include("User");
             ViewBag.Articles = articles;
             return View();
         }
