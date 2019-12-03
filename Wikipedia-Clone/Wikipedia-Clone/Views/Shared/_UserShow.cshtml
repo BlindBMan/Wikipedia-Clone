@@ -1,0 +1,21 @@
+﻿@model Wikipedia_Clone.Models.ApplicationUser
+
+<div>
+    <h2>
+        @Model.UserName
+    </h2>
+    <br />
+
+    <p>
+        @Model.Email
+    </p>
+    <br />
+
+
+    <p>
+        Rolul userului????
+    </p>
+
+    @Html.ActionLink("Edit user", "Edit", "User", new { Model.Id }, null)
+
+</div>

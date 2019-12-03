@@ -25,14 +25,14 @@ namespace Wikipedia_Clone.Controllers
         }
 
         [HttpGet]
-        public ActionResult Show(int id)
+        public ActionResult Show(string id)
         {
             ApplicationUser user = db.Users.Find(id);
             return View(user);
         }
 
         [HttpGet]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
             ApplicationUser user = db.Users.Find(id);
             user.AllRoles = GetRoles();
@@ -79,7 +79,7 @@ namespace Wikipedia_Clone.Controllers
         }
 
         [HttpDelete]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
             ApplicationUser user = db.Users.Find(id);
             db.Users.Remove(user);

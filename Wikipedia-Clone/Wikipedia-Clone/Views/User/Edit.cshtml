@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Wikipedia_Clone.Models.ApplicationUser
+
+<h1>
+    Edit @Model.UserName
+</h1>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "User"))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.Label("UserName", "User name")
+    <br />
+
+    @Html.EditorFor(m => m.UserName)
+    <br />
+
+    @Html.Label("Email", "Email")
+    <br />
+
+    @Html.EditorFor(m => m.Email)
+    <br />
+
+    <label>
+        Select role
+    </label>
+
+    @Html.DropDownList("newRole",
+                       new SelectList(Model.AllRoles, "Value", "Text", (string)ViewBag.userRole),
+                       null,
+                       new { @class = "form-control"})
+    <br />
+
+    <button type="submit">Save</button>
+}
+

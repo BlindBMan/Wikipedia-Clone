@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Wikipedia_Clone.Models.ApplicationUser
+
+@Html.Partial("_UserShow", Model)
+
+@using (Html.BeginForm(actionName: "Delete", controllerName: "User"))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HttpMethodOverride(HttpVerbs.Delete)
+    <button type="submit">Delete user</button>
+}
+
+<br />
+
+@Html.ActionLink("Back to users", "Index", "User", null, null)

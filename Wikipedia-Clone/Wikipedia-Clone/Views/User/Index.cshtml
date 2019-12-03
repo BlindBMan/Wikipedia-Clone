@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Wikipedia_Clone.Models.ApplicationUser
+
+<h1>
+    Users
+</h1>
+
+@foreach (Wikipedia_Clone.Models.ApplicationUser user in ViewBag.Users)
+{
+    @Html.Partial("_UserShow", user)
+    @Html.ActionLink("View user", "Show", "User", new { user.Id }, null)
+}
+
