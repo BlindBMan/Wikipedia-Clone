@@ -5,7 +5,7 @@ namespace Wikipedia_Clone.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Email required")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }

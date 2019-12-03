@@ -14,7 +14,7 @@ namespace Wikipedia_Clone.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var articles = db.Articles.Include("Category");
+            var articles = db.Articles.Include("Category").Include("User");
             ViewBag.Articles = articles;
             return View();
         }
@@ -98,6 +98,7 @@ namespace Wikipedia_Clone.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "God, Admin")]
         public ActionResult Delete(int id)
         {
             Article article = db.Articles.Find(id);
