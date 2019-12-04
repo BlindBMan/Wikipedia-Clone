@@ -6,37 +6,53 @@
 <h2>
     Edit @Model.Title
 </h2>
-
-@using (Html.BeginForm(actionName: "Edit", controllerName: "Article"))
+@if (Model.Protected == true && !User.Identity.IsAuthenticated)
 {
-    @Html.HiddenFor(m => m.Id)
-    @Html.HttpMethodOverride(HttpVerbs.Put)
-
-    @Html.Label("Title", "Article title")
-    <br />
-
-    @Html.TextBox("Title", null, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
-    <br />
-
-    @Html.Label("Content", "Content")
-    <br />
-
-    @Html.TextArea("Content", null, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })
-    <br />
-
-    @Html.Hidden("Date", DateTime.Now)
-
-    <label>Select category</label>
-    @Html.DropDownListFor(m => m.CategoryId,
-                          new SelectList(Model.Categories, "Value", "Text"),
-                          "Select category",
-                          new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
-
-    <button type="submit">
-        Save edit
-    </button>
+    <p>
+        PERMISSION DENIED
+    </p>
 }
+else
+{
+    using (Html.BeginForm(actionName: "Edit", controllerName: "Article"))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HttpMethodOverride(HttpVerbs.Put)
 
+        @Html.Label("Title", "Article title")
+        <br />
+
+        @Html.TextBox("Title", null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+        <br />
+
+        @Html.Label("Content", "Content")
+        <br />
+
+        @Html.TextArea("Content", null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })
+        <br />
+
+        @Html.Hidden("Date", DateTime.Now)
+        <br />
+
+        if (User.IsInRole("God") || User.IsInRole("Admin"))
+        {
+            <label>
+                Protect @Html.CheckBox("Protected", false)
+            </label>
+        }
+        <br />
+
+        <label>Select category</label>
+        @Html.DropDownListFor(m => m.CategoryId,
+                                   new SelectList(Model.Categories, "Value", "Text"),
+                                   "Select category",
+                                   new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
+
+        <button type="submit">
+            Save edit
+        </button>
+    }
+}

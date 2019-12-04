@@ -7,6 +7,10 @@
 @foreach (Wikipedia_Clone.Models.Article article in ViewBag.Articles)
 {
     @Html.Partial("ArticleInfo", article)
+    @Html.ActionLink("View article", "Show", "Article", new { article.Id }, null)
+
 }
+<br />
+<br />
 
 @Html.ActionLink("Add article", "New", "Article", null, null)

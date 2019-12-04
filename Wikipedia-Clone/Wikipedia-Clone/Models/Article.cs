@@ -21,6 +21,9 @@ namespace Wikipedia_Clone.Models
 
         public DateTime Date { get; set; }
 
+        // Protects against unregistered editing
+        public bool Protected { get; set; }
+
         [Required(ErrorMessage = "Category is required")]
         public int CategoryId { get; set; }
 

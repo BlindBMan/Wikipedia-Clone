@@ -1,24 +1,29 @@
 ﻿@model Wikipedia_Clone.Models.Article
 
-<div>
-    <h1>
-        @Model.Title
-    </h1>
+    <div>
+        <h1>
+            @Model.Title
+        </h1>
 
-    <p>
-        @Model.Content
-    </p>
+        <p>
+            @Model.Content
+        </p>
 
-    <small>
-        @Model.Date.ToString()
-    </small>
+        <p>
+            @Model.User.UserName
+        </p>
 
-    <p>
-        @Model.Category.CategoryTitle
-    </p>
+        <small>
+            @Model.Date.ToString()
+        </small>
 
-    @Html.ActionLink("View article", "Show", "Article",  new { Model.Id }, null)
-    @Html.ActionLink("Edit article", "Edit", "Article",  new { Model.Id }, null)
-</div>
+        <p>
+            @Model.Category.CategoryTitle
+        </p>
+        @if (Model.Protected == false)
+        {
+            @Html.ActionLink("Edit article", "Edit", "Article", new { Model.Id }, null)
+        }
+    </div>
 
 

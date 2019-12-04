@@ -8,6 +8,7 @@
 @using (Html.BeginForm(actionName: "New", controllerName: "Article"))
 {
     @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.UserId)
 
     @Html.Label("Title", "Article title")
     <br />
@@ -26,6 +27,14 @@
     @Html.Hidden("Date", DateTime.Now)
     <br />
 
+    if (User.IsInRole("God") || User.IsInRole("Admin"))
+    {
+        <label>
+            Protect @Html.CheckBox("Protected", false)
+        </label>
+    }
+    <br />
+
     <label>Select category</label>
     @Html.DropDownListFor(m => m.CategoryId,
                           new SelectList(Model.Categories, "Value", "Text"),
@@ -36,7 +45,6 @@
     <button type="submit">
         Add article
     </button>
-
 
 }
 

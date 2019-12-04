@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -31,6 +32,7 @@ namespace Wikipedia_Clone.Controllers
         public ActionResult New(Article article)
         {
             article.Categories = GetCategories();
+            article.UserId = User.Identity.GetUserId();
 
             try
             {
@@ -82,6 +84,7 @@ namespace Wikipedia_Clone.Controllers
                         article.Content = reqArticle.Content;
                         article.Title = reqArticle.Title;
                         article.Date = reqArticle.Date;
+                        article.Protected = reqArticle.Protected;
                         db.SaveChanges();
                     }
                     return RedirectToAction("Index");
