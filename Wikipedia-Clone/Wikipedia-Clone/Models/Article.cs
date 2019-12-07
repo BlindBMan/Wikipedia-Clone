@@ -16,8 +16,13 @@ namespace Wikipedia_Clone.Models
         [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
 
+        [AllowHtml]
         [Required(ErrorMessage = "Content is required")]
         public string Content { get; set; }
+
+        // previous contents
+        [AllowHtml]
+        public string LastContent { get; set; }
 
         public DateTime Date { get; set; }
 

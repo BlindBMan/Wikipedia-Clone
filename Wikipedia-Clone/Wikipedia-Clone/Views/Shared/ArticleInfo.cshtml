@@ -5,12 +5,15 @@
             @Model.Title
         </h1>
 
-        <p>
-            @Model.Content
-        </p>
+        <div>
+            @Html.Raw(Model.Content)
+        </div>
 
         <p>
-            @Model.User.UserName
+            @if (Model.User != null && Model.User.UserName != null)
+            {
+                @Model.User.UserName
+            }
         </p>
 
         <small>
@@ -24,6 +27,13 @@
         {
             @Html.ActionLink("Edit article", "Edit", "Article", new { Model.Id }, null)
         }
-    </div>
+
+        <br />
+        @if (Model.LastContent != null && (User.IsInRole("Editor") || User.IsInRole("Admin") || User.IsInRole("God")))
+        {
+            @Html.ActionLink("Show Last State", "ShowChanges", "Article", new { Model.Id }, null)
+        }
+
+        </div>
 
 

@@ -3,12 +3,16 @@
 }
 @model Wikipedia_Clone.Models.Article
 
+@Scripts.Render("~/Scripts/tinyMCEConf.js")
+
 <h2>Add article</h2>
 
 @using (Html.BeginForm(actionName: "New", controllerName: "Article"))
 {
     @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.UserId)
+
+    @Html.HiddenFor(m => m.LastContent);
 
     @Html.Label("Title", "Article title")
     <br />

@@ -102,3 +102,5 @@ C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\
 C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\obj\Debug\Wikipedia-Clone.csproj.CopyComplete
 C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\obj\Debug\Wikipedia-Clone.dll
 C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\obj\Debug\Wikipedia-Clone.pdb
+A:\Facultate anul 3\Dezv Aplicatii Web\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\obj\Debug\Wikipedia-Clone.dll
+A:\Facultate anul 3\Dezv Aplicatii Web\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\obj\Debug\Wikipedia-Clone.pdb

@@ -1,0 +1,32 @@
+﻿@model Wikipedia_Clone.Models.Article
+@{
+    ViewBag.Title = "ShowChanges";
+}
+
+<h2>@Model.Title</h2>
+
+<section>
+    @if (Model.LastContent != null)
+    {
+        @Html.Raw(Model.LastContent)
+    }
+</section>
+
+<br />
+<br />
+
+@using (Html.BeginForm(actionName: "Revert", controllerName: "Article", method: FormMethod.Post, routeValues: new { id = Model.Id }))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.Hidden("Content", Model.LastContent)
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Title)
+    @Html.HiddenFor(m => m.Content)
+    @Html.Hidden("Date", DateTime.Now)
+    @Html.CheckBox("Protected", Model.Protected, new { style = "display: none" })
+    @Html.HiddenFor(m => m.CategoryId)
+
+    <button type="submit">Revert Changes</button>
+}
+

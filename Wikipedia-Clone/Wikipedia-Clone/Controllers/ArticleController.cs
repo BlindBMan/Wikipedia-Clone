@@ -16,6 +16,7 @@ namespace Wikipedia_Clone.Controllers
         public ActionResult Index()
         {
             var articles = db.Articles.Include("Category").Include("User");
+
             ViewBag.Articles = articles;
             return View();
         }
@@ -23,8 +24,12 @@ namespace Wikipedia_Clone.Controllers
         [HttpGet]
         public ActionResult New()
         {
-            Article article = new Article();
-            article.Categories = GetCategories();
+            Article article = new Article
+            {
+                Categories = GetCategories(),
+                LastContent = null
+            };
+
             return View(article);
         }
 
@@ -57,6 +62,7 @@ namespace Wikipedia_Clone.Controllers
         public ActionResult Show(int id)
         {
             Article article = db.Articles.Find(id);
+
             return View(article);
         }
 
@@ -65,6 +71,9 @@ namespace Wikipedia_Clone.Controllers
         {
             Article article = db.Articles.Find(id);
             article.Categories = GetCategories();
+
+            article.LastContent = article.Content;
+
             return View(article);
         }
 
@@ -81,12 +90,14 @@ namespace Wikipedia_Clone.Controllers
 
                     if (TryUpdateModel(article))
                     {
+                        article.LastContent = reqArticle.LastContent;
                         article.Content = reqArticle.Content;
                         article.Title = reqArticle.Title;
                         article.Date = reqArticle.Date;
                         article.Protected = reqArticle.Protected;
                         db.SaveChanges();
                     }
+
                     return RedirectToAction("Index");
                 }
                 else
@@ -97,6 +108,42 @@ namespace Wikipedia_Clone.Controllers
             catch (Exception e)
             {
                 return View(reqArticle);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ShowChanges(int id)
+        {
+            var article = db.Articles.Find(id);
+
+            return View(article);
+        }
+
+        [HttpPut]
+        [Authorize(Roles = "Editor, Admin, God")]
+        public ActionResult Revert(int id, Article reqArticle)
+        {
+            try
+            {
+                Article article = db.Articles.Find(id);
+
+                if (TryUpdateModel(article))
+                {
+                    article.Content = reqArticle.Content;
+                    article.LastContent = null;
+                    article.Date = reqArticle.Date;
+                    db.SaveChanges();
+
+                    TempData["Message"] = "Article revert was successful!";
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch(Exception)
+            { 
+                TempData["Message"] = "Something went wrong while trying to revert the article's changes.";
+
+                return RedirectToAction("Index");
             }
         }
 

@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <!-- tinyMCE include -->
+    <script src="https://cdn.tiny.cloud/1/0voiwgdrj358hzrqhqvg82l8mdbz78wpc97ze6lfjmlr2jeg/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -17,14 +21,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Wiki Wiki", "Index", "Article", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+                    <li>@Html.ActionLink("Home", "Index", "Article")</li>
+                    @if (User.IsInRole("God") || User.IsInRole("Admin"))
+
+                    {
+                        <li>@Html.ActionLink("Categories", "Index", "Category")</li>
+                    }
+
+                    @if (User.IsInRole("God") || User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Users", "Index", "User")</li>
+                    }
+                    </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

@@ -3,6 +3,8 @@
 }
 @model Wikipedia_Clone.Models.Article
 
+@Scripts.Render("~/Scripts/tinyMCEConf.js")
+
 <h2>
     Edit @Model.Title
 </h2>
@@ -18,6 +20,8 @@ else
     {
         @Html.HiddenFor(m => m.Id)
         @Html.HttpMethodOverride(HttpVerbs.Put)
+
+        @Html.HiddenFor(m => m.LastContent);
 
         @Html.Label("Title", "Article title")
         <br />

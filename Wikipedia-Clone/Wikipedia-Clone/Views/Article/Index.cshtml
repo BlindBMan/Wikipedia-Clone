@@ -4,11 +4,17 @@
 
 <h2>Articles</h2>
 
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-primary" role="alert">
+        @TempData["Message"]
+    </div>
+}
+
 @foreach (Wikipedia_Clone.Models.Article article in ViewBag.Articles)
 {
     @Html.Partial("ArticleInfo", article)
     @Html.ActionLink("View article", "Show", "Article", new { article.Id }, null)
-
 }
 <br />
 <br />
