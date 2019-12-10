@@ -104,3 +104,13 @@ C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\
 C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\obj\Debug\Wikipedia-Clone.pdb
 A:\Facultate anul 3\Dezv Aplicatii Web\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\obj\Debug\Wikipedia-Clone.dll
 A:\Facultate anul 3\Dezv Aplicatii Web\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\obj\Debug\Wikipedia-Clone.pdb
+C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\bin\Elasticsearch.Net.dll
+C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\bin\Nest.dll
+C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\bin\System.Buffers.dll
+C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\bin\System.Diagnostics.DiagnosticSource.dll
+C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\bin\Elasticsearch.Net.pdb
+C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\bin\Elasticsearch.Net.xml
+C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\bin\Nest.pdb
+C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\bin\Nest.xml
+C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\bin\System.Buffers.xml
+C:\Users\gusti\Documents\GitHub\Wikipedia-Clone\Wikipedia-Clone\Wikipedia-Clone\bin\System.Diagnostics.DiagnosticSource.xml
