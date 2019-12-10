@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using LocalProject.Models;
+using Microsoft.AspNet.Identity;
+using Nest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +14,69 @@ namespace Wikipedia_Clone.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private ElasticClient client = new ElasticClient(
+            new ConnectionSettings().DefaultIndex("article")
+        );
+        
+        // TODO: implement pagination
+        private int _perPage = 20;
+
         [HttpGet]
         public ActionResult Index()
         {
-            var articles = db.Articles.Include("Category").Include("User");
+            // if a search phrase has been specified use elasticSearch to get the ids of the found articles
+            List<int> searchResultedIds = new List<int>();
 
-            ViewBag.Articles = articles;
+            string searchPhrase = Request.Params.Get("SearchPhrase");
+
+            // if a search phrase has been mentioned
+            if (searchPhrase != null)
+            {
+                // search using the provided phrase
+                var searchResponse = client.Search<ElasticArticle>(s => s
+                    // get a partial result => we need only the id of the found articles
+                    .Source(sf => sf
+                        .Includes(i => i
+                            .Fields(f => f.Id)
+                        )
+                    )
+                    // query for the wanted articles that contain the searchPhrase in the title or the content
+                    .Query(q => q
+                        .MatchPhrase(m => m
+                            .Field(f => f.Title)
+                            .Query(searchPhrase)
+                        ) || q
+                        .MatchPhrase(m => m
+                            .Field(f => f.Content)
+                            .Query(searchPhrase)
+                       )
+                    )
+                );
+
+                var partialDocuments = searchResponse.Documents;
+
+                foreach (var partialDocument in partialDocuments)
+                {
+                    searchResultedIds.Add(partialDocument.Id);
+                }
+            }
+
+            var articles = db.Articles.Include("Category").Include("User").OrderBy(a => a.Date);
+            IQueryable<Article> paginatedArticles;
+
+            int offset = 0;
+
+            // if a search phrase was specified, we have to filter and keep only the found articles
+            if (searchPhrase != null)
+            {
+                paginatedArticles = articles.Where(a => searchResultedIds.Contains(a.Id)).Skip(offset).Take(_perPage);
+            }
+            else
+            {
+                paginatedArticles = articles.Skip(offset).Take(_perPage);
+            }
+
+            ViewBag.Articles = paginatedArticles;
             return View();
         }
 
@@ -45,6 +104,19 @@ namespace Wikipedia_Clone.Controllers
                 {
                     db.Articles.Add(article);
                     db.SaveChanges();
+
+                    // after creating a new article, make an elasticArticle representation and send it
+                    // to the elasticSearch server, to be indexed
+                    if (!IndexElasticArticle(article))
+                    {
+                        // if the indexing fails
+                        TempData["Message"] = "Your article could not be properly indexed. It might not show up in searches.";
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Your article was successfully created.";
+                    }
+
                     return RedirectToAction("Index");
                 }
                 else
@@ -96,6 +168,18 @@ namespace Wikipedia_Clone.Controllers
                         article.Date = reqArticle.Date;
                         article.Protected = reqArticle.Protected;
                         db.SaveChanges();
+
+                        // after editing an article, make an elasticArticle representation and send it
+                        // to the elasticSearch server, to be indexed for searches
+                        if (!IndexElasticArticle(article))
+                        {
+                            // if the indexing fails
+                            TempData["Message"] = "Your article could not be properly indexed. It might not show up in searches.";
+                        }
+                        else
+                        {
+                            TempData["Message"] = "Your article was successfully edited.";
+                        }
                     }
 
                     return RedirectToAction("Index");
@@ -134,7 +218,18 @@ namespace Wikipedia_Clone.Controllers
                     article.Date = reqArticle.Date;
                     db.SaveChanges();
 
-                    TempData["Message"] = "Article revert was successful!";
+                    // after reverting an article, make an elasticArticle representation and send it
+                    // to the elasticSearch server, to be indexed for searches
+                    if (!IndexElasticArticle(article))
+                    {
+                        // if the indexing fails
+                        TempData["Message"] = "Your article could not be properly indexed. It might not show up in searches.";
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Article revert was successful!";
+                    }
+                    
                 }
 
                 return RedirectToAction("Index");
@@ -154,6 +249,12 @@ namespace Wikipedia_Clone.Controllers
             Article article = db.Articles.Find(id);
             db.Articles.Remove(article);
             db.SaveChanges();
+
+            // after removing the article from the db, issue a delete request to the ElasticSearch engine
+            client.Delete<ElasticArticle>(id);
+
+            TempData["Message"] = "Your article has been successfully deleted.";
+
             return RedirectToAction("Index");
         }
 
@@ -173,6 +274,31 @@ namespace Wikipedia_Clone.Controllers
             }
 
             return list;
+        }
+
+        // make an elasticArticle representation and send it to the elasticSearch server, to be indexed
+        [NonAction]
+        public bool IndexElasticArticle(Article article)
+        {
+            ElasticArticle elasticArticle = new ElasticArticle
+            {
+                Id = article.Id,
+                Title = article.Title,
+                Content = article.Content,
+                Date = article.Date.ToString(),
+                CategoryName = article.Category.CategoryTitle
+            };
+
+            var indexResponse = client.IndexDocument(elasticArticle);
+
+            if (!indexResponse.IsValid)
+            {
+                // the indexing of the article failed
+                return false;
+            }
+
+            // index was succesful
+            return true;
         }
     }
 }
