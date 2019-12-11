@@ -1,4 +1,6 @@
-﻿body {
+﻿@import url('https://fonts.googleapis.com/css?family=Courier+Prime|Montserrat|Fjalla+One|Source+Code+Pro&display=swap');
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -26,18 +28,65 @@ textarea {
 
 /* Basic styles for Table of Contents plugin (toc) */
 .mce-toc {
-    border: 1px solid gray;
+    display: inline-flex;
+    flex-direction: column;
+
+    background-color: #74b9ff;
+    /*border: 2px solid #0984e3;*/
+    border-radius: 5px;
+    padding: 0.5em;
 }
 
 .mce-toc h2 {
+    color: white;
     margin: 4px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .mce-toc li {
     list-style-type: none;
 }
 
-/* The style of an article's chpater */
+.mce-toc li > a {
+    color: #dfe6e9;
+    font-family: 'Courier Prime', monospace;
+}
+
+/* The style of an article's chapter */
 .article-chapter {
     border: 1px dotted red;
 }
+
+.article-title {
+    color: #2d3436;
+    font-family: 'Fjalla One', sans-serif;
+    text-align: center;
+    
+}
+
+.article-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    user-select: none;
+
+    font-family: 'Source Code Pro', monospace;
+}
+
+.article-underline {
+    border-bottom: 1px solid;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+
+.btn > a:hover {
+    text-decoration: none;
+}
+
+#search-navbar {
+    background-color: #dfe6e9;
+    padding: 0.5em;
+}
+

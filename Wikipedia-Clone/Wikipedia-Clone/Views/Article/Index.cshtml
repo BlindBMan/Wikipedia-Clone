@@ -38,19 +38,26 @@
     window.addEventListener("load", setCorrectLocation);
 </script>
 
-@using (Html.BeginForm(actionName: "Index", controllerName: "Article", method: FormMethod.Get))
+@using (Html.BeginForm(actionName: "Index", controllerName: "Article", method: FormMethod.Get, htmlAttributes: new { @class = "navbar-form well", @role = "search", @id = "search-navbar" }))
 {
-    <input type="text" name="SearchPhrase" placeholder="Insert search phrase" 
-           @if (ViewBag.SearchPhrase != null) {  
-                @:value="@ViewBag.SearchPhrase"
-           }/>
-    
-        <input type="submit" value="Search" />
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="input-group text-center">
+                <span class="input-group-btn">
+                    <button class="btn btn-default glyphicon glyphicon-search" type="submit"> </button>
+                </span>
+                <input type="text" class="form-control" name="SearchPhrase" placeholder="Insert search phrase"
+                       @if (ViewBag.SearchPhrase != null) { @: value="@ViewBag.SearchPhrase"
+                       } />
+            </div><!-- /input-group -->
+        </div>
+    </div>
 }
 
 @if (TempData["Message"] != null)
 {
-    <div class="alert alert-primary" role="alert">
+    <br />
+    <div class="alert alert-info" role="alert">
         @TempData["Message"]
     </div>
 }
@@ -58,44 +65,51 @@
 @foreach (Wikipedia_Clone.Models.Article article in ViewBag.Articles)
 {
     @Html.Partial("ArticleInfo", article)
-    @Html.ActionLink("View article", "Show", "Article", new { article.Id }, null)
+
+
+    @Html.ActionLink("View article", "Show", "Article", new { article.Id }, new { @class = "btn btn-default" })
+
+    <br />
+    <br />
+    <br />
 }
 <br />
-<br />
 
-@Html.ActionLink("Add article", "New", "Article", null, null)
+
+@Html.ActionLink("Add a new article", "New", "Article", null, new { @class = "btn btn-default btn-lg" })
+
 
 @if (ViewBag.ArticleCount > 0)
 {
-<nav aria-label="Article navigation">
-    <ul class="pagination">
-        @if (ViewBag.ArticleCount > 0)
-        {
+    <nav aria-label="Article navigation">
+        <ul class="pagination">
+            @if (ViewBag.ArticleCount > 0)
+            {
 
-            <li class="page-item">
-                <a class="page-link" href="{currLocation}Page=1">&laquo;</a>
-            </li>
-        }
+                <li class="page-item">
+                    <a class="page-link" href="{currLocation}Page=1">&laquo;</a>
+                </li>
+            }
 
-        @for (int pageNum = 1; pageNum <= ViewBag.LastPage; pageNum++)
-        {
-            <li class="page-item">
-                <a class="page-link" href="{currLocation}Page=@pageNum">@pageNum</a>
-            </li>
-        }
+            @for (int pageNum = 1; pageNum <= ViewBag.LastPage; pageNum++)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="{currLocation}Page=@pageNum">@pageNum</a>
+                </li>
+            }
 
-        @if (ViewBag.ArticleCount > ViewBag.PerPage)
-        {
-            <li class="page-item">
-                <a class="page-link" href="{currLocation}Page=@ViewBag.LastPage">&raquo;</a>
-            </li>
-        }
-        else
-        {
-            <li class="page-item disabled">
-                <a class="page-link" href="{currLocation}Page=@ViewBag.LastPage">&raquo;</a>
-            </li>
-        }
-    </ul>
-</nav>
+            @if (ViewBag.ArticleCount > ViewBag.PerPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="{currLocation}Page=@ViewBag.LastPage">&raquo;</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" href="{currLocation}Page=@ViewBag.LastPage">&raquo;</a>
+                </li>
+            }
+        </ul>
+    </nav>
 }

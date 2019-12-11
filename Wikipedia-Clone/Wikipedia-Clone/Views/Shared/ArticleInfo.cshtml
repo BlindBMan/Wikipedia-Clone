@@ -1,39 +1,51 @@
 ﻿@model Wikipedia_Clone.Models.Article
 
-<div>
-    <h1>
-        @Model.Title
-    </h1>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-heading article-title">
+            <span class="article-underline">
+                @Model.Title
+            </span>
+        </h2>
+    </div>
 
-    <div>
+    <div class="panel-body">
         @Html.Raw(Model.Content)
     </div>
 
-    <p>
-        @if (Model.User != null && Model.User.UserName != null)
-        {
-            @Model.User.UserName
-        }
-    </p>
+    <div class="panel-footer">
+        <div class="article-details">
+            <p class="glyphicon glyphicon-education">
+                @if (Model.User != null && Model.User.UserName != null)
+                {
+                    @Model.User.UserName
+                }
+            </p>
 
-    <small>
-        @Model.Date.ToString()
-    </small>
+            <small class="glyphicon glyphicon-calendar">
+                @Model.Date.ToString()
+            </small>
 
-    <p>
-        @Model.Category.CategoryTitle
-    </p>
-    @if (Model.Protected == false)
-    {
-        @Html.ActionLink("Edit article", "Edit", "Article", new { Model.Id }, null)
-    }
+            <p class="glyphicon glyphicon-knight">
+                @Model.Category.CategoryTitle
+            </p>
+        </div>
 
-    <br />
-    @if (Model.LastContent != null && (User.IsInRole("Editor") || User.IsInRole("Admin") || User.IsInRole("God")))
-    {
-        @Html.ActionLink("Show Last State", "ShowChanges", "Article", new { Model.Id }, null)
-    }
+        <br />
+
+        <div class="btn-group">
+            @if (Model.Protected == false)
+            {
+                @Html.ActionLink("Edit article", "Edit", "Article", new { Model.Id }, new { @class = "btn btn-default" })
+            }
+
+            @if (Model.LastContent != null && (User.IsInRole("Editor") || User.IsInRole("Admin") || User.IsInRole("God")))
+            {
+                @Html.ActionLink("Show Last State", "ShowChanges", "Article", new { Model.Id }, new { @class = "btn btn-default" })
+            }
+        </div>
 
     </div>
+</div>
 
 

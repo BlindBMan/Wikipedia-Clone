@@ -37,7 +37,7 @@ else
         @Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })
         <br />
 
-        @Html.Hidden("Date", DateTime.Now)
+        @Html.HiddenFor(m => m.Date)
         <br />
 
         if (User.IsInRole("God") || User.IsInRole("Admin"))

@@ -64,10 +64,21 @@ let fileName = function (blobInfo) {
     return `${filename}${Date.now()}${ext}`;
 }
 
-let chapterTemplate = '<section class="article-chapter">\
-<h1>Your chapter\'s title</h1>\
-<p>Contents</p>\
-</section > ';
+let headingStyle = `
+    text-align:center;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+`;
+
+let chapterTemplate = `
+<section>
+    <h1 style="${headingStyle}">Your chapter\'s title</h1>
+    <hr />
+    <br />
+
+    <p>Contents</p>
+</section >
+`;
 
 tinymce.init({
     // the textarea to be overriden
