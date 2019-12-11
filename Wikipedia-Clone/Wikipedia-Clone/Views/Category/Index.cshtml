@@ -3,23 +3,32 @@
 }
 @model Wikipedia_Clone.Models.Category
 
-<h1>
+<h2>
     Categories
-</h1>
+</h2>
 
 @foreach (Wikipedia_Clone.Models.Category category in ViewBag.Categories)
 {
-    <h3>
-        @category.CategoryTitle
-    </h3>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-heading article-title">
+            <span class="article-underline">
+                @category.CategoryTitle
+            </span>
+        </h2>
+    </div>
 
-    @Html.ActionLink("Edit category ", "Edit", "Category", routeValues: new { id = category.CategoryId }, htmlAttributes: null)
-    @Html.ActionLink("View category ", "Show", "Category", new { id = category.CategoryId }, null)
-    <br />
+    <div class="btn-group">
+        @Html.ActionLink("Edit category ", "Edit", "Category", new { id = category.CategoryId }, new { @class = "btn btn-default" })
+        @Html.ActionLink("View category ", "Show", "Category", new { id = category.CategoryId }, new { @class = "btn btn-default" })
+        <br />
+    </div>
 
+</div>
 }
 
-@Html.ActionLink("Add new category", "New", "Category", null, null)
+<br />
+@Html.ActionLink("Add new category", "New", "Category", null, new { @class = "btn btn-default btn-lg" })
 <br />
 
 

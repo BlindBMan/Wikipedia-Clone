@@ -1,21 +1,19 @@
 ﻿@model Wikipedia_Clone.Models.ApplicationUser
 
-<div>
-    <h2>
-        @Model.UserName
-    </h2>
-    <br />
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-heading article-title">
+            <span class="article-underline">
+                @Model.UserName
+            </span>
+        </h2>
+    </div>
 
-    <p>
+    <div class="panel-body">
         @Model.Email
-    </p>
-    <br />
-
-
-    <p>
         Rolul userului????
-    </p>
+    </div>
 
-    @Html.ActionLink("Edit user", "Edit", "User", new { Model.Id }, null)
+    @Html.ActionLink("Edit user", "Edit", "User", new { Model.Id }, new { @class = "btn btn-default" })
 
 </div>

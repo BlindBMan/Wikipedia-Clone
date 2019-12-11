@@ -9,9 +9,9 @@
 {
     @Html.HiddenFor(m => m.Id)
     @Html.HttpMethodOverride(HttpVerbs.Delete)
-    <button type="submit">Delete user</button>
+    <button type="submit" class="btn btn-default">Delete user</button>
 }
 
 <br />
 
-@Html.ActionLink("Back to users", "Index", "User", null, null)
+@Html.ActionLink("Back to users", "Index", "User", null, new { @class = "btn btn-default" })

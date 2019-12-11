@@ -3,13 +3,13 @@
 }
 @model Wikipedia_Clone.Models.ApplicationUser
 
-<h1>
+<h2>
     Users
-</h1>
+</h2>
 
 @foreach (Wikipedia_Clone.Models.ApplicationUser user in ViewBag.Users)
 {
     @Html.Partial("_UserShow", user)
-    @Html.ActionLink("View user", "Show", "User", new { user.Id }, null)
+    @Html.ActionLink("View user", "Show", "User", new { user.Id }, new { @class = "btn btn-default" })
 }
 
