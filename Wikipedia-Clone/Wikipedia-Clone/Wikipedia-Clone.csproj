@@ -266,6 +266,9 @@
     <Content Include="Views\Shared\_UserShow.cshtml" />
     <Content Include="Views\User\Show.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\Shared\_HomeArticle.cshtml" />
+    <Content Include="Views\Article\ShowChanges.cshtml" />
+    <Content Include="Views\Category\ShowCategoryArticles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

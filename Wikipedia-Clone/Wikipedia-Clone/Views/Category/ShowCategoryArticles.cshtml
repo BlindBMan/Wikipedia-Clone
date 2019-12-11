@@ -1,0 +1,7 @@
+﻿@model Wikipedia_Clone.Models.Article
+
+@foreach (Wikipedia_Clone.Models.Article article in ViewBag.Articles)
+{
+    @Html.Partial("ArticleInfo", article)
+}
+

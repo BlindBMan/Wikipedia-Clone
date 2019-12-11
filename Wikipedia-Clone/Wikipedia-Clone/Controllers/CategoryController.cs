@@ -97,5 +97,30 @@ namespace Wikipedia_Clone.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public ActionResult ShowCategoryArticles(int CategoryId)
+        {
+            var articles = GetArticles(CategoryId);
+            ViewBag.Articles = articles;
+            return View();
+        }
+
+        [NonAction]
+        private ICollection<Article> GetArticles(int CategoryId)
+        {
+            var list = new List<Article>();
+            var articles = from article in db.Articles select article;
+
+            foreach (var article in articles)
+            {
+                if (article.CategoryId == CategoryId)
+                {
+                    list.Add(article);
+                }
+            }
+
+            return list;
+        }
     }
 }

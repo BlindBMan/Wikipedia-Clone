@@ -1,39 +1,39 @@
 ﻿@model Wikipedia_Clone.Models.Article
 
+<div>
+    <h1>
+        @Model.Title
+    </h1>
+
     <div>
-        <h1>
-            @Model.Title
-        </h1>
+        @Html.Raw(Model.Content)
+    </div>
 
-        <div>
-            @Html.Raw(Model.Content)
-        </div>
-
-        <p>
-            @if (Model.User != null && Model.User.UserName != null)
-            {
-                @Model.User.UserName
-            }
-        </p>
-
-        <small>
-            @Model.Date.ToString()
-        </small>
-
-        <p>
-            @Model.Category.CategoryTitle
-        </p>
-        @if (Model.Protected == false)
+    <p>
+        @if (Model.User != null && Model.User.UserName != null)
         {
-            @Html.ActionLink("Edit article", "Edit", "Article", new { Model.Id }, null)
+            @Model.User.UserName
         }
+    </p>
 
-        <br />
-        @if (Model.LastContent != null && (User.IsInRole("Editor") || User.IsInRole("Admin") || User.IsInRole("God")))
-        {
-            @Html.ActionLink("Show Last State", "ShowChanges", "Article", new { Model.Id }, null)
-        }
+    <small>
+        @Model.Date.ToString()
+    </small>
 
-        </div>
+    <p>
+        @Model.Category.CategoryTitle
+    </p>
+    @if (Model.Protected == false)
+    {
+        @Html.ActionLink("Edit article", "Edit", "Article", new { Model.Id }, null)
+    }
+
+    <br />
+    @if (Model.LastContent != null && (User.IsInRole("Editor") || User.IsInRole("Admin") || User.IsInRole("God")))
+    {
+        @Html.ActionLink("Show Last State", "ShowChanges", "Article", new { Model.Id }, null)
+    }
+
+    </div>
 
 

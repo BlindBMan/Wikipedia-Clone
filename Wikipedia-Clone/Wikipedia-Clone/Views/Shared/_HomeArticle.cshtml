@@ -1,0 +1,28 @@
+﻿@model Wikipedia_Clone.Models.Article
+
+<div>
+    <h1>
+        @Model.Title
+    </h1>
+
+    <div>
+        @Html.Raw(Model.Content)
+    </div>
+
+    <p>
+        @if (Model.User != null && Model.User.UserName != null)
+        {
+            @Model.User.UserName
+        }
+    </p>
+
+    <small>
+        @Model.Date.ToString()
+    </small>
+
+    <p>
+        
+        @Html.ActionLink(Model.Category.CategoryTitle.ToString(), "ShowCategoryArticles", "Category", new { Model.CategoryId }, null)
+    </p>
+ 
+</div>
