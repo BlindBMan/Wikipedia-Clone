@@ -27,7 +27,7 @@
             </small>
         </div>
 
-        @Html.ActionLink(Model.Category.CategoryTitle.ToString(), "ShowCategoryArticles", "Category", new { Model.CategoryId }, new { @class = "btn btn-info" })
+        @Html.ActionLink(Model.Category.CategoryTitle.ToString(), "ShowCategoryArticles", "Category", new { Model.CategoryId, orderOption = 1 }, new { @class = "btn btn-info" })
 
     </div>
 </div>

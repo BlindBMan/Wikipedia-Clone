@@ -99,10 +99,14 @@ namespace Wikipedia_Clone.Controllers
         }
 
         [HttpGet]
-        public ActionResult ShowCategoryArticles(int CategoryId)
+        public ActionResult ShowCategoryArticles(int CategoryId, int orderOption)
         {
             var articles = GetArticles(CategoryId);
+            ViewBag.categoryId = CategoryId;
             ViewBag.Articles = articles;
+
+            // orderOption == 1 => order by date, else order by title
+            ViewBag.orderOption = orderOption;
             return View();
         }
 

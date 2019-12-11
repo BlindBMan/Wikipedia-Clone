@@ -1,7 +1,24 @@
 ﻿@model Wikipedia_Clone.Models.Article
 
-@foreach (Wikipedia_Clone.Models.Article article in ViewBag.Articles)
+
+@if (ViewBag.orderOption == 1)
 {
-    @Html.Partial("ArticleInfo", article)
+    <input type="button" value="Order by Title" onclick="@("window.location.href='" + @Url.Action("ShowCategoryArticles", "Category", new { ViewBag.categoryId, orderOption = 2 }) + "'");" />
+
+    foreach (Wikipedia_Clone.Models.Article article in (ViewBag.Articles as List<Wikipedia_Clone.Models.Article>).OrderBy(m => m.Date))
+    {
+        @Html.Partial("ArticleInfo", article)
+    }
 }
+else
+{
+    <input type="button" value="Order by Date" onclick="@("window.location.href='" + @Url.Action("ShowCategoryArticles", "Category", new { ViewBag.categoryId, orderOption = 1 }) + "'");" />
+
+    foreach (Wikipedia_Clone.Models.Article article in (ViewBag.Articles as List<Wikipedia_Clone.Models.Article>).OrderBy(m => m.Title))
+    {
+        @Html.Partial("ArticleInfo", article)
+    }
+}
+
+
 
