@@ -4,10 +4,48 @@
 
 <h2>Articles</h2>
 
+<script>
+    // set the hrefs of the page navigation anchors
+    let setCorrectLocation = function () {
+        let anchors = document.querySelectorAll(".page-item>a"),
+            regex = /Page=\d+/;
+
+        for (let anchor of anchors) {
+            let currHref = anchor.getAttribute("href"),
+                replaceHref = window.location.href;
+
+            // if the page location already contains a Page query parameter, remove that
+            if (regex.test(replaceHref)) {
+                replaceHref = replaceHref.replace(regex, "");
+            }
+            // if other get params are specified we want to keep them
+            else if (replaceHref.includes("?")) {
+                // the Page param is added to the param list
+                replaceHref = replaceHref.concat("&");
+            }
+            else {
+                // the Page is the only param
+                replaceHref = replaceHref.concat("?");
+            }
+
+            // replace "{currLocation}" string
+            replaceHref = currHref.replace("{currLocation}", replaceHref);
+
+            anchor.setAttribute("href", replaceHref);
+        }
+    }
+
+    window.addEventListener("load", setCorrectLocation);
+</script>
+
 @using (Html.BeginForm(actionName: "Index", controllerName: "Article", method: FormMethod.Get))
 {
-    <input type="text" name="SearchPhrase" placeholder="Insert search phrase" />
-    <input type="submit" value="Search" />
+    <input type="text" name="SearchPhrase" placeholder="Insert search phrase" 
+           @if (ViewBag.SearchPhrase != null) {  
+                @:value="@ViewBag.SearchPhrase"
+           }/>
+    
+        <input type="submit" value="Search" />
 }
 
 @if (TempData["Message"] != null)
@@ -26,3 +64,38 @@
 <br />
 
 @Html.ActionLink("Add article", "New", "Article", null, null)
+
+@if (ViewBag.ArticleCount > 0)
+{
+<nav aria-label="Article navigation">
+    <ul class="pagination">
+        @if (ViewBag.ArticleCount > 0)
+        {
+
+            <li class="page-item">
+                <a class="page-link" href="{currLocation}Page=1">&laquo;</a>
+            </li>
+        }
+
+        @for (int pageNum = 1; pageNum <= ViewBag.LastPage; pageNum++)
+        {
+            <li class="page-item">
+                <a class="page-link" href="{currLocation}Page=@pageNum">@pageNum</a>
+            </li>
+        }
+
+        @if (ViewBag.ArticleCount > ViewBag.PerPage)
+        {
+            <li class="page-item">
+                <a class="page-link" href="{currLocation}Page=@ViewBag.LastPage">&raquo;</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="{currLocation}Page=@ViewBag.LastPage">&raquo;</a>
+            </li>
+        }
+    </ul>
+</nav>
+}

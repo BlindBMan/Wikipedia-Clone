@@ -18,8 +18,7 @@ namespace Wikipedia_Clone.Controllers
             new ConnectionSettings().DefaultIndex("article")
         );
         
-        // TODO: implement pagination
-        private int _perPage = 20;
+        private int _perPage = 3;
 
         [HttpGet]
         public ActionResult Index()
@@ -64,19 +63,56 @@ namespace Wikipedia_Clone.Controllers
             var articles = db.Articles.Include("Category").Include("User").OrderBy(a => a.Date);
             IQueryable<Article> paginatedArticles;
 
-            int offset = 0;
+            // keep count how many articles per page there are
+            ViewBag.PerPage = _perPage;
 
             // if a search phrase was specified, we have to filter and keep only the found articles
             if (searchPhrase != null)
             {
-                paginatedArticles = articles.Where(a => searchResultedIds.Contains(a.Id)).Skip(offset).Take(_perPage);
+                paginatedArticles = articles.Where(a => searchResultedIds.Contains(a.Id));
+
+                // also include the search phrase so it is not lost from the html search box input
+                ViewBag.SearchPhrase = searchPhrase;
             }
             else
             {
-                paginatedArticles = articles.Skip(offset).Take(_perPage);
+                paginatedArticles = articles;
             }
 
-            ViewBag.Articles = paginatedArticles;
+            // data needed for pagination
+
+            int lastPage = paginatedArticles.Count() / _perPage;
+
+            ViewBag.LastPage = (paginatedArticles.Count() % _perPage == 0) ? lastPage : lastPage + 1;
+            ViewBag.ArticleCount = paginatedArticles.Count();
+
+            int offset, currPage;
+
+            // get the current requested page
+            string pageParam;
+            if ((pageParam = Request.Params.Get("Page")) != null)
+            {
+                try
+                {
+                    // if the parameter format is wrong it could crash the application
+                    currPage = Convert.ToInt32(pageParam);
+                }
+                catch(Exception)
+                {
+                    currPage = 1;
+                }
+            }
+            else
+            {
+                // if no parameter is provided, we are showing the first page
+                currPage = 1;
+            }
+
+            offset = (currPage - 1) * _perPage;
+
+            // show only the articles on this page
+            ViewBag.Articles = paginatedArticles.Skip(offset).Take(_perPage);
+
             return View();
         }
 
