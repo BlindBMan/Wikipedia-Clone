@@ -15,13 +15,13 @@
     @Html.Label("UserName", "User name")
     <br />
 
-    @Html.EditorFor(m => m.UserName)
+    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
     <br />
 
     @Html.Label("Email", "Email")
     <br />
 
-    @Html.EditorFor(m => m.Email)
+    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
     <br />
 
     <label>
@@ -34,6 +34,6 @@
                        new { @class = "form-control"})
     <br />
 
-    <button type="submit">Save</button>
+    <button class="btn btn-default" type="submit">Save</button>
 }
 

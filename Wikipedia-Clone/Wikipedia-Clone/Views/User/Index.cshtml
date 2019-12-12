@@ -13,3 +13,34 @@
     @Html.ActionLink("View user", "Show", "User", new { user.Id }, new { @class = "btn btn-default" })
 }
 
+@if (ViewBag.UsersCount > 0)
+{
+    <nav aria-label="Category navigation">
+        <ul class="pagination">
+
+            <li class="page-item">
+                <a class="page-link" href="/User/Index?Page=1">&laquo;</a>
+            </li>
+
+            @for (int pageNum = 1; pageNum <= ViewBag.LastPage; pageNum++)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="/User/Index?Page=@pageNum">@pageNum</a>
+                </li>
+            }
+
+            @if (ViewBag.UsersCount > ViewBag.PerPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="/User/Index?Page=@ViewBag.LastPage">&raquo;</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" href="/User/Index?Page=@ViewBag.LastPage">&raquo;</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

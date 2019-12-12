@@ -11,12 +11,48 @@ namespace Wikipedia_Clone.Controllers
     public class CategoryController : Controller
     {
         private ApplicationDbContext db = ApplicationDbContext.Create();
-        
+
+        private int _perPage = 3;
+
         [HttpGet]
         public ActionResult Index()
         {
             var categories = db.Categories;
-            ViewBag.Categories = categories;
+
+            // categories pagination
+            ViewBag.PerPage = _perPage;
+
+            int lastPage = categories.Count() / _perPage;
+
+            ViewBag.LastPage = (categories.Count() % _perPage == 0) ? lastPage : lastPage + 1;
+            ViewBag.CategoryCount = categories.Count();
+
+            int offset, currPage;
+
+            // get the current requested page
+            string pageParam;
+            if ((pageParam = Request.Params.Get("Page")) != null)
+            {
+                try
+                {
+                    // if the parameter format is wrong it could crash the application
+                    currPage = Convert.ToInt32(pageParam);
+                }
+                catch (Exception)
+                {
+                    currPage = 1;
+                }
+            }
+            else
+            {
+                // if no parameter is provided, we are showing the first page
+                currPage = 1;
+            }
+
+            offset = (currPage - 1) * _perPage;
+
+            ViewBag.Categories = categories.OrderBy(c => c.CategoryTitle).Skip(offset).Take(_perPage);
+
             return View();
         }
 
@@ -102,8 +138,11 @@ namespace Wikipedia_Clone.Controllers
         public ActionResult ShowCategoryArticles(int CategoryId, int orderOption)
         {
             var articles = GetArticles(CategoryId);
+
             ViewBag.categoryId = CategoryId;
             ViewBag.Articles = articles;
+            ViewBag.CategoryTitle = db.Categories.Find(CategoryId).CategoryTitle;
+
 
             // orderOption == 1 => order by date, else order by title
             ViewBag.orderOption = orderOption;

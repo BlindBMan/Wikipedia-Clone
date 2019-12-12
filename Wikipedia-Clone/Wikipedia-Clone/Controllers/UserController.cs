@@ -14,13 +14,48 @@ namespace Wikipedia_Clone.Controllers
     {
         private ApplicationDbContext db = ApplicationDbContext.Create();
 
+        private int _perPage = 3;
+
         [HttpGet]
         public ActionResult Index()
         {
             var users = from user in db.Users
                         orderby user.UserName
                         select user;
-            ViewBag.Users = users;
+
+            // users pagination
+            ViewBag.PerPage = _perPage;
+
+            int lastPage = users.Count() / _perPage;
+
+            ViewBag.LastPage = (users.Count() % _perPage == 0) ? lastPage : lastPage + 1;
+            ViewBag.UsersCount = users.Count();
+
+            int offset, currPage;
+
+            // get the current requested page
+            string pageParam;
+            if ((pageParam = Request.Params.Get("Page")) != null)
+            {
+                try
+                {
+                    // if the parameter format is wrong it could crash the application
+                    currPage = Convert.ToInt32(pageParam);
+                }
+                catch (Exception)
+                {
+                    currPage = 1;
+                }
+            }
+            else
+            {
+                // if no parameter is provided, we are showing the first page
+                currPage = 1;
+            }
+
+            offset = (currPage - 1) * _perPage;
+
+            ViewBag.Users = users.OrderBy(u => u.UserName).Skip(offset).Take(_perPage);
             return View();
         }
 

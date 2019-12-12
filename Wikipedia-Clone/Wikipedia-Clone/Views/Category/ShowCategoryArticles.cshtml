@@ -1,9 +1,19 @@
 ﻿@model Wikipedia_Clone.Models.Article
 
+<h1>@ViewBag.CategoryTitle</h1>
+
+<br />
+<br />
 
 @if (ViewBag.orderOption == 1)
 {
-    <input type="button" value="Order by Title" onclick="@("window.location.href='" + @Url.Action("ShowCategoryArticles", "Category", new { ViewBag.categoryId, orderOption = 2 }) + "'");" />
+    <button class="btn btn-info"
+           type="button" value="" onclick="@("window.location.href='" + @Url.Action("ShowCategoryArticles", "Category", new { ViewBag.categoryId, orderOption = 2 }) + "'");" >
+        <span class="glyphicon glyphicon-font"></span><small> Order by Title</small>
+    </button>
+
+    <br />
+    <br />
 
     foreach (Wikipedia_Clone.Models.Article article in (ViewBag.Articles as List<Wikipedia_Clone.Models.Article>).OrderBy(m => m.Date))
     {
@@ -12,7 +22,12 @@
 }
 else
 {
-    <input type="button" value="Order by Date" onclick="@("window.location.href='" + @Url.Action("ShowCategoryArticles", "Category", new { ViewBag.categoryId, orderOption = 1 }) + "'");" />
+    <button class="btn btn-info"
+            type="button" onclick="@("window.location.href='" + @Url.Action("ShowCategoryArticles", "Category", new { ViewBag.categoryId, orderOption = 1 }) + "'");">
+        <span class="glyphicon glyphicon-calendar"></span><small> Order by Date</small>
+    </button>
+    <br />
+    <br />
 
     foreach (Wikipedia_Clone.Models.Article article in (ViewBag.Articles as List<Wikipedia_Clone.Models.Article>).OrderBy(m => m.Title))
     {

@@ -9,27 +9,57 @@
 
 @foreach (Wikipedia_Clone.Models.Category category in ViewBag.Categories)
 {
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-heading article-title">
-            <span class="article-underline">
-                @category.CategoryTitle
-            </span>
-        </h2>
-    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-heading article-title">
+                <span class="article-underline">
+                    @category.CategoryTitle
+                </span>
+            </h2>
+        </div>
 
-    <div class="btn-group">
-        @Html.ActionLink("Edit category ", "Edit", "Category", new { id = category.CategoryId }, new { @class = "btn btn-default" })
-        @Html.ActionLink("View category ", "Show", "Category", new { id = category.CategoryId }, new { @class = "btn btn-default" })
-        <br />
-    </div>
+        <div class="btn-group">
+            @Html.ActionLink("Edit category ", "Edit", "Category", new { id = category.CategoryId }, new { @class = "btn btn-default" })
+            @Html.ActionLink("View category ", "Show", "Category", new { id = category.CategoryId }, new { @class = "btn btn-default" })
+            <br />
+        </div>
 
-</div>
+    </div>
 }
 
 <br />
 @Html.ActionLink("Add new category", "New", "Category", null, new { @class = "btn btn-default btn-lg" })
 <br />
 
+@if (ViewBag.CategoryCount > 0)
+{
+    <nav aria-label="Category navigation">
+        <ul class="pagination">
 
+            <li class="page-item">
+                <a class="page-link" href="/Category/Index?Page=1">&laquo;</a>
+            </li>
+
+            @for (int pageNum = 1; pageNum <= ViewBag.LastPage; pageNum++)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="/Category/Index?Page=@pageNum">@pageNum</a>
+                </li>
+            }
+
+            @if (ViewBag.CategoryCount > ViewBag.PerPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="/Category/Index?Page=@ViewBag.LastPage">&raquo;</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" href="/Category/Index?Page=@ViewBag.LastPage">&raquo;</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
 
