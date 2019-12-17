@@ -7,13 +7,13 @@ using Wikipedia_Clone.Models;
 
 namespace Wikipedia_Clone.Controllers
 {
-    [Authorize(Roles = "God, Admin")]
     public class CategoryController : Controller
     {
         private ApplicationDbContext db = ApplicationDbContext.Create();
 
         private int _perPage = 3;
 
+        [Authorize(Roles = "God, Admin")]
         [HttpGet]
         public ActionResult Index()
         {
@@ -56,6 +56,7 @@ namespace Wikipedia_Clone.Controllers
             return View();
         }
 
+        [Authorize(Roles = "God, Admin")]
         [HttpGet]
         public ActionResult New()
         {
@@ -63,6 +64,7 @@ namespace Wikipedia_Clone.Controllers
             return View(category);
         }
 
+        [Authorize(Roles = "God, Admin")]
         [HttpPost]
         public ActionResult New(Category category)
         {
@@ -85,6 +87,7 @@ namespace Wikipedia_Clone.Controllers
             }
         }
 
+        [Authorize(Roles = "God, Admin")]
         [HttpGet]
         public ActionResult Show(int id)
         {
@@ -92,6 +95,7 @@ namespace Wikipedia_Clone.Controllers
             return View(category);
         }
 
+        [Authorize(Roles = "God, Admin")]
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -99,6 +103,7 @@ namespace Wikipedia_Clone.Controllers
             return View(category);
         }
 
+        [Authorize(Roles = "God, Admin")]
         [HttpPut]
         public ActionResult Edit(int id, Category reqCategory)
         {
@@ -125,6 +130,7 @@ namespace Wikipedia_Clone.Controllers
             }
         }
 
+        [Authorize(Roles = "God, Admin")]
         [HttpDelete]
         public ActionResult Delete(int id)
         {
@@ -149,6 +155,7 @@ namespace Wikipedia_Clone.Controllers
             return View();
         }
 
+        [Authorize(Roles = "God, Admin")]
         [NonAction]
         private ICollection<Article> GetArticles(int CategoryId)
         {
